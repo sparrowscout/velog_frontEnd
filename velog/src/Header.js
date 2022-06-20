@@ -1,8 +1,41 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate,Link } from "react-router-dom";
+import Login from "./Login";
 
 const Header = () => {
+    const [isLogin, setIsLogin] = useState(false)
+
+    const isLoginCheck = () => {
+        //토큰 부분으로 바꿔야함
+        localStorage.getItem('id')}
+
+    const LogOut = () => {
+        //토큰 부분으로 바꿔야함
+        localStorage.removeItem('id');
+        setIsLogin(false);
+    }
+
+    useEffect(() => {
+        isLoginCheck();
+        if (isLoginCheck !== null) {
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+    },[])
+
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+        setShowModal(true)
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
+
     const Navigate = useNavigate();
 
     return (
@@ -22,9 +55,17 @@ const Header = () => {
             }}>
         <svg width="17" height="17" viewBox="0 0 17 17"><path fillRule="evenodd" d="M13.66 7.36a6.3 6.3 0 1 1-12.598 0 6.3 6.3 0 0 1 12.598 0zm-1.73 5.772a7.36 7.36 0 1 1 1.201-1.201l3.636 3.635c.31.31.31.815 0 1.126l-.075.075a.796.796 0 0 1-1.126 0l-3.636-3.635z" clipRule="evenodd" fill="currentColor"></path></svg>
             </Search>
-            <Login>
-                로그인
-            </Login>
+             {/* 새 글 작성 버튼 1025px이후부터 나옴, 1024부터는 드롭다운에 들어감 */}
+             <Link to="/write">새 글 작성</Link>
+                <Link to="/myvelog">내 벨로그</Link>
+                {isLogin ?  <div>프로필사진</div> : <LoginBtn onClick={openModal}>
+                    로그인
+                </LoginBtn>}
+                <span onClick={LogOut}> 로그아웃</span> 
+
+                {showModal ?
+                    <Login showModal={showModal} closeModal={closeModal} />
+                    : null}
         </Right>
         </HeadBox>
     );
@@ -56,7 +97,8 @@ margin-top: 3px;
     background-color: rgb(235, 236, 237)
 }
 `;
-const Login = styled.button`
+
+const LoginBtn = styled.button`
 width: 80px;
 height: 32px;
 border: none;

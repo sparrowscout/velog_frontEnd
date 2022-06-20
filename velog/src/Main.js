@@ -52,6 +52,7 @@ const Main = () => {
       </>
     ) })}
     </>
+
     );
 
 };
@@ -169,5 +170,7 @@ border-radius: 25px;
 border: 1px solid black;
 margin-right: 10px;
 `;
+
+
 
 export default Main;
