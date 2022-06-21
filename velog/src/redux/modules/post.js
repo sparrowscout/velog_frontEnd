@@ -1,4 +1,6 @@
 import axios from "axios";
+import { storage } from "../../shared/firebase";
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 
 //action
 const GET_POST = "GET_POST"
@@ -43,31 +45,14 @@ const initialState = {
     };
   };
 
-  export const addpostAc = (post) => {
-    return function (dispatch) {
-      axios.post("http://localhost5001", post)
-            .then((response) => {})
-            dispatch(addPost(post))
-            .catch(error => {
-              console.log("add error", error)
-            })
-    };
-  };
-
-  export const createPostAc = (title, content, contentSummary, tagStrings, imgpath) => {
-    console.log(title, content, contentSummary, tagStrings, imgpath);
+  export const createPostAc = (post) => {
+    console.log(post);
     return function (dispatch) {
       axios
-        .post("http://localhost5001/GetBoardDetail", {
-          title: title,
-          content: content,
-          contentSummary: contentSummary,
-          tagStrings: tagStrings,
-          imgpath: imgpath,
-        })
+        .post("http://3.34.178.13:8080/boards",post)
         .then((response) => {
           console.log(response);
-          dispatch(createPost())
+          dispatch(createPost(response.data))
           alert("출간 완료");
           window.location.replace("/");
         })

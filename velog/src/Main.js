@@ -9,8 +9,10 @@ import axios from "axios";
 const Main = () => {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+
   const list_data = useSelector((state) =>state.post.list)
   console.log(list_data,"리스트?")
+  
   React.useEffect(() => {
     dispatch(getpostAc());
   },[]);

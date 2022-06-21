@@ -15,8 +15,11 @@ const Register = (props) => {
     const contentSummary_ref = React.useRef();
     const storage = getStorage();
 
-
     const [imgFile, setImgFile] = useState();
+
+    const [contentSummary, setContentSummary] = React.useState()
+
+    const thumb = React.useRef();
 
     const styleButton = () =>{
         let myInput = document.getElementById("input-file");
@@ -56,17 +59,17 @@ const Register = (props) => {
     return (
         <>
         <div style={{height:"100%", width:"100%", backgroundColor:"red"}}></div>
-      <PubBox>
+      <PubBox ref={thumb}>
             <Left>
                 <Ph4>포스트 미리보기</Ph4>
                 <div style={{height:"194px", width:"320px", backgroundColor:"#e9ecef", position:"relative"}}>
-                    <img src={imgFile} style={{width:"320px" ,height:"140px"}} />
+                    <img src={imgFile} style={{width:"320px" ,height:"195px"}} />
                     <input type="file" name="file" id="input-file" ref={imgRef} onChange={uploadIMG} style={{display:"none"}}></input>
                     <Thumbbtn onClick={styleButton}>썸네일 업로드</Thumbbtn>
                 </div>
-                <Ph4 ref={title_ref}>title</Ph4>
-                <DeInput ref={contentSummary_ref} />
-                <p style={{textAlign:"right"}}>contentSummary.length /150</p>
+                <Ph4 ref={title_ref}>{props.title_ref}</Ph4>
+                <DeInput ref={contentSummary_ref}  value={contentSummary}/>
+                <span style={{textAlign:"right"}}>content.length /150</span>
             </Left>
             <Right>
                 <Rp>공개 설정</Rp>
@@ -79,8 +82,8 @@ const Register = (props) => {
                 <Rp>시리즈 설정</Rp>
                 <SeriesBtn>시리즈에 추가하기</SeriesBtn>
                 <LastBtn>
-                <CancBtn>취소</CancBtn>
-                <PubBtn>출간하기</PubBtn>
+                <CancBtn onClick={props.BacktoWrite}>취소</CancBtn>
+                <PubBtn onClick={postAc}>출간하기</PubBtn>
                 </LastBtn>
             </Right>
         </PubBox>
@@ -94,7 +97,27 @@ border: 1px solid black;
 display: flex;
 margin: auto;
 align-items: center;
-margin-top: 20%;
+margin-top: 15%;
+animation: 250ms ease 0ms 1 normal forwards running thumbIn;
+  @keyframes thumbIn {
+      0%{
+          transform: translateY(100%)
+      }
+      100%{
+          transform: translateY(0)
+      }
+  }
+  &.thumb-out{
+    animation: 250ms ease 0ms 1 normal forwards running thumbOut;
+    @keyframes thumbOut {
+        0%{
+            transform: translateY(0)
+        }
+        100%{
+            transform: translateY(100%)
+        }
+    }
+  }
 `;
 
 const Left = styled.div`
