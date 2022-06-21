@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { getpostAc } from "./redux/modules/post";
 import axios from "axios";
 
-const Main = () => {
+const Main = (props) => {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 
@@ -22,8 +22,10 @@ const Main = () => {
     {list_data.map((list, id) => {
             return(
               <>
-        <CardWrap key={list.id} onClick={() => {Navigate(`/detail/${id}`)}}>
-        <CardImg>{list.thumbnail}</CardImg>
+        <CardWrap key={list_data.id} onClick={() => {Navigate(`/detail/${id}`)}}>
+        {/* <CardImg>{list.thumbnail}</CardImg> */}
+        <CardImg><img src={list.thumbnail}/></CardImg>
+        
         <Body>
           <Title>
         {list.title}

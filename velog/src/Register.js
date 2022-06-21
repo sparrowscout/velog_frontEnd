@@ -11,13 +11,14 @@ const Register = (props) => {
 
     const dispatch = useDispatch();
     const imgRef = React.useRef();
-    const title_ref = React.useRef();
+    const title_ref = React.useRef(null);
     const contentSummary_ref = React.useRef();
     const storage = getStorage();
 
     const [imgFile, setImgFile] = useState();
 
     const [contentSummary, setContentSummary] = React.useState()
+
 
     const thumb = React.useRef();
 
@@ -32,7 +33,9 @@ const Register = (props) => {
             e.target.files[0]);
             fileImagePreview(e.target.files[0]);
             const file_url = await getDownloadURL(uploded_file.ref);
-            imgRef.current = { url : file_url};
+            // imgRef.current = { url : file_url};
+            setImgFile(file_url)
+            
     };
 
     const fileImagePreview = (fileBlob) => {
@@ -48,13 +51,19 @@ const Register = (props) => {
         });
         
     };
-    const postAc = ()=>{
-        console.log(title_ref.current.value, contentSummary_ref.current.value, imgFile);
+    const postAc = () => {
+        console.log(title_ref.current.value, contentSummary_ref.current.value, imgFile, "title확ㅇㄴ");
         dispatch(createPostAc({
             title : title_ref.current.value,
             contentSummary : contentSummary_ref.current.value,
             imgpath : imgFile
         }))};
+
+    // const changeSummary = (e) => {
+    //     if(contentSummary.length < 150){
+    //         setContentSummary(e.target.value)
+    //     }
+    // }
     
     return (
         <>
@@ -67,7 +76,8 @@ const Register = (props) => {
                     <input type="file" name="file" id="input-file" ref={imgRef} onChange={uploadIMG} style={{display:"none"}}></input>
                     <Thumbbtn onClick={styleButton}>썸네일 업로드</Thumbbtn>
                 </div>
-                <Ph4 ref={title_ref}>{props.title_ref}</Ph4>
+                {/* <Ph4 ref={title_ref}>{props.title_ref}</Ph4> */}
+                <Ph4 ref={title_ref}>타이틀</Ph4>
                 <DeInput ref={contentSummary_ref}  value={contentSummary}/>
                 <span style={{textAlign:"right"}}>content.length /150</span>
             </Left>
@@ -251,7 +261,7 @@ border: none;
 border-radius: 4px;
 `;
 
-const Ph4 = styled.p`
+const Ph4 = styled.span`
 text-align: left;
 font-size: 21px;
 font-weight: 700;

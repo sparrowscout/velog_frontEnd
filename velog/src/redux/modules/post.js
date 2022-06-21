@@ -33,7 +33,7 @@ const initialState = {
   //middlewares
   export const getpostAc = () => {
     return function (dispatch) {
-      axios.get("http://localhost:5001/GetBoardMain")
+      axios.get("http://3.34.178.13/viewboards")
       .then(response => {
         console.log(response.data,"redux_data");
         // dispatch(getPost([...response.data]));
@@ -46,13 +46,16 @@ const initialState = {
   };
 
   export const createPostAc = (post) => {
-    console.log(post);
+    console.log(post,"CPA");
+    debugger
     return function (dispatch) {
       axios
-        .post("http://3.34.178.13:8080/boards",post)
+        .post("http://3.34.178.13/boards",post)
         .then((response) => {
-          console.log(response);
+          debugger
+          console.log(response,"resonse check");
           dispatch(createPost(response.data))
+          debugger
           alert("출간 완료");
           window.location.replace("/");
         })
